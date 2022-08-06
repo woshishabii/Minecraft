@@ -11,7 +11,7 @@ from pyglet.gl import *
 from pyglet.graphics import TextureGroup
 from pyglet.window import key, mouse
 
-TICKS_PER_SEC = 1000
+TICKS_PER_SEC = 60
 
 # Size of sectors used to ease block loading.
 SECTOR_SIZE = 16
@@ -35,6 +35,11 @@ PLAYER_HEIGHT = 2
 
 if sys.version_info[0] >= 3:
     xrange = range
+
+def get_resource_path(relative_path):
+    if hasattr(sys, '_MEIPASS'):
+        return os.path.join(sys._MEIPASS, relative_path)
+    return os.path.join(os.path.abspath("."), relative_path)
 
 def cube_vertices(x, y, z, n):
     """ Return the vertices of the cube at position x, y, z with size 2*n.
@@ -74,7 +79,7 @@ def tex_coords(top, bottom, side):
     return result
 
 
-TEXTURE_PATH = 'texture.png'
+TEXTURE_PATH = get_resource_path('texture.png')
 
 GRASS = tex_coords((1, 0), (0, 1), (0, 0))
 SAND = tex_coords((1, 1), (1, 1), (1, 1))
