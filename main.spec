@@ -12,7 +12,6 @@ a = Analysis(
     datas=[('texture.png', '.'), ('pywintypes310.dll', '.')],
     hiddenimports=[],
     hookspath=[],
-    hooksconfig={},
     runtime_hooks=[],
     excludes=[],
     win_no_prefer_redirects=False,
