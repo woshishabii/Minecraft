@@ -12,16 +12,22 @@ from pyglet.gl import *
 from pyglet.graphics import TextureGroup
 from pyglet.window import key, mouse
 
+# TPS (Tick Per Second)/ 每秒更新次数
 TICKS_PER_SEC = 60
 
 # Size of sectors used to ease block loading.
+# Size of Sector / 区块大小, 用于分割区块
 SECTOR_SIZE = 16
 
+# 顾名思义, 行走速度
 WALKING_SPEED = 5
+# 顾名思义, 飞行速度
 FLYING_SPEED = 15
 
+# 重力
 GRAVITY = 20.0
-MAX_JUMP_HEIGHT = 1.0  # About the height of a block.
+# 人物跳跃高度(根据MC Wiki, 玩家默认跳跃高度为1.25219)
+MAX_JUMP_HEIGHT = 1.25  # About the height of a block.
 # To derive the formula for calculating jump speed, first solve
 #    v_t = v_0 + a * t
 # for the time at which you achieve maximum height, where a is the acceleration
@@ -29,10 +35,19 @@ MAX_JUMP_HEIGHT = 1.0  # About the height of a block.
 #    t = - v_0 / a
 # Use t and the desired MAX_JUMP_HEIGHT to solve for v_0 (jump speed) in
 #    s = s_0 + v_0 * t + (a * t^2) / 2
+# Translate / 翻译
+# 推导跳跃速度的计算公式, 首先求解：
+#   v_t = v_0 + a * t
+# 达到最大高度所用的时间, 其中a是加速度, v_t = 0, 得出:
+#   t = - v_0 / a
+# 通过a和设定的最大跳跃高度(MAX_JUMP_HEIGHT)求解v_0
+#   s = s_0 + v_0 * t + (a * t^2) / 2
 JUMP_SPEED = math.sqrt(2 * GRAVITY * MAX_JUMP_HEIGHT)
+# 速度上限
 TERMINAL_VELOCITY = 50
 
-PLAYER_HEIGHT = 2
+# 玩家模型高度
+PLAYER_HEIGHT = 1.8
 
 if sys.version_info[0] >= 3:
     xrange = range
