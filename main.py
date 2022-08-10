@@ -102,6 +102,7 @@ def tex_coords(top, bottom, side):
 
 TEXTURE_PATH = get_resource_path('texture.png')
 
+# 定义方块材质
 GRASS = tex_coords((1, 0), (0, 1), (0, 0))
 SAND = tex_coords((1, 1), (1, 1), (1, 1))
 BRICK = tex_coords((2, 0), (2, 0), (2, 0))
@@ -120,6 +121,7 @@ FACES = [
 def normalize(position):
     """ Accepts `position` of arbitrary precision and returns the block
     containing that position.
+    返回当前的整数坐标
 
     Parameters
     ----------
@@ -137,7 +139,8 @@ def normalize(position):
 
 def sectorize(position):
     """ Returns a tuple representing the sector for the given `position`.
-
+	返回当前的区块坐标
+	
     Parameters
     ----------
     position : tuple of len 3
@@ -160,13 +163,16 @@ class Model(object):
         self.batch = pyglet.graphics.Batch()
 
         # A TextureGroup manages an OpenGL texture.
+        # 定义材质表
         self.group = TextureGroup(image.load(TEXTURE_PATH).get_texture())
 
         # A mapping from position to the texture of the block at that position.
         # This defines all the blocks that are currently in the world.
+        # 存档数据
         self.world = {}
 
         # Same mapping as `world` but only contains blocks that are shown.
+        # 方块渲染优化: 可视的方块
         self.shown = {}
 
         # Mapping from position to a pyglet `VertextList` for all shown blocks.
@@ -183,8 +189,10 @@ class Model(object):
 
     def _initialize(self):
         """ Initialize the world by placing all the blocks.
+        初始化世界
 
         """
+        # 世界高度的1/2, 可理解为MC JE 中的水平面(TODO)
         n = 80  # 1/2 width and height of world
         s = 1  # step size
         y = 0  # initial y height
@@ -199,6 +207,7 @@ class Model(object):
                         self.add_block((x, y + dy, z), STONE, immediate=False)
 
         # generate the hills randomly
+        # 随机生成山丘地形
         o = n - 10
         for _ in xrange(120):
             a = random.randint(-o, o)  # x position of the hill
@@ -222,6 +231,8 @@ class Model(object):
         """ Line of sight search from current position. If a block is
         intersected it is returned, along with the block previously in the line
         of sight. If no block is found, return None, None.
+        测试能都触碰到方块
+        通过连线, 最远8格
 
         Parameters
         ----------
