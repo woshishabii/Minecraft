@@ -35,5 +35,5 @@ jobs:
         draft: false
         prerelease: true
         files: |
-          ./dist/windows/PyMinecraft.exe
+          ./dist/windows/*
           LICENSE
