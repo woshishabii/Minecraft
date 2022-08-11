@@ -88,7 +88,7 @@ def tex_coord(x, y, n=4):
 
 def tex_coords(top, bottom, side):
     """ Return a list of the texture squares for the top, bottom and side.
-
+        返回材质列表
     """
     top = tex_coord(*top)
     bottom = tex_coord(*bottom)
