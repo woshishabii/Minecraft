@@ -48,7 +48,7 @@ JUMP_SPEED = math.sqrt(2 * GRAVITY * MAX_JUMP_HEIGHT)
 TERMINAL_VELOCITY = 50
 
 # 玩家模型高度
-PLAYER_HEIGHT = 1.8
+PLAYER_HEIGHT = 2
 
 # Py2 Py3 版本兼容
 if sys.version_info[0] >= 3:
