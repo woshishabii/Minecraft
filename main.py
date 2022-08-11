@@ -901,7 +901,7 @@ class Window(pyglet.window.Window):
             len(self.model._shown), len(self.model.world))
         '''
         self.debugScreen.text = f'''Coordinate: {normalize(self.position)}
-        Version: {version}'''
+        Version: {version['STAGE']} {version['VERSION']}'''
         # self.label.draw()
         self.debugScreen.draw()
 
