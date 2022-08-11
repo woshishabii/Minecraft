@@ -886,7 +886,7 @@ class Window(pyglet.window.Window):
         self.label.text = '%02d (%.2f, %.2f, %.2f) %d / %d' % (
             pyglet.clock.get_fps(), x, y, z,
             len(self.model._shown), len(self.model.world))
-        self.positionLabel.text = f'Coodinate: {self.position}'
+        self.positionLabel.text = f'Coordinate: {normalize(self.position)}'
         self.label.draw()
         self.positionLabel.draw()
 
