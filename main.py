@@ -539,7 +539,7 @@ class Window(pyglet.window.Window):
 
         # TODO 
         # TEST LABEL for POSITION
-        self.debugScreen = pyglet.text.Label('position', font_name='Arial', font_size=18,
+        self.debugScreen = pyglet.text.HTMLLabel('position', font_name='Arial', font_size=18,
                                        x=10, y=10, anchor_x='left', anchor_y='bottom',
                                        color=(0, 0, 0, 255))
 
@@ -900,7 +900,7 @@ class Window(pyglet.window.Window):
             pyglet.clock.get_fps(), x, y, z,
             len(self.model._shown), len(self.model.world))
         '''
-        self.debugScreen.text = f'''Coordinate: {normalize(self.position)}\n
+        self.debugScreen.text = f'''Coordinate: {normalize(self.position)}<br>
         Version: {version['STAGE']} {version['VERSION']}'''
         # self.label.draw()
         self.debugScreen.draw()
