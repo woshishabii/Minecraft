@@ -900,7 +900,7 @@ class Window(pyglet.window.Window):
             pyglet.clock.get_fps(), x, y, z,
             len(self.model._shown), len(self.model.world))
         '''
-        self.debugScreen.text = f'''Coordinate: {normalize(self.position)}
+        self.debugScreen.text = f'''Coordinate: {normalize(self.position)}\n
         Version: {version['STAGE']} {version['VERSION']}'''
         # self.label.draw()
         self.debugScreen.draw()
