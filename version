@@ -1,0 +1,3 @@
+[DEFAULT]
+STAGE = "pre-Classic"
+VERSION = "0.0.1"

@@ -6,6 +6,7 @@ import os
 import math
 import random
 import time
+import configparser
 
 from collections import deque
 from pyglet import image
@@ -60,6 +61,13 @@ def get_resource_path(relative_path):
     if hasattr(sys, '_MEIPASS'):
         return os.path.join(sys._MEIPASS, relative_path)
     return os.path.join(os.path.abspath("."), relative_path)
+
+
+# 获取版本信息
+version = configparser.ConfigParser()
+version.read(get_resource_path('version'))
+version = version['DEFAULT']
+
 
 
 def cube_vertices(x, y, z, n):
@@ -892,7 +900,8 @@ class Window(pyglet.window.Window):
             pyglet.clock.get_fps(), x, y, z,
             len(self.model._shown), len(self.model.world))
         '''
-        self.debugScreen.text = f'Coordinate: {normalize(self.position)}'
+        self.debugScreen.text = f'''Coordinate: {normalize(self.position)}
+        Version: {version}'''
         # self.label.draw()
         self.debugScreen.draw()
 
