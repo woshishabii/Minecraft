@@ -526,6 +526,11 @@ class Window(pyglet.window.Window):
         self.label = pyglet.text.Label('', font_name='Arial', font_size=18,
                                        x=10, y=self.height - 10, anchor_x='left', anchor_y='top',
                                        color=(0, 0, 0, 255))
+        # TODO 
+        # TEST LABEL for POSITION
+        self.positionLabel = pyglet.text.Label('position', font_name='Arial', font_size=18,
+                                       x=10, y=10, anchor_x='left', anchor_y='bottom',
+                                       color=(0, 0, 0, 255))
 
         # This call schedules the `update()` method to be called
         # TICKS_PER_SEC. This is the main game event loop.
@@ -881,7 +886,9 @@ class Window(pyglet.window.Window):
         self.label.text = '%02d (%.2f, %.2f, %.2f) %d / %d' % (
             pyglet.clock.get_fps(), x, y, z,
             len(self.model._shown), len(self.model.world))
+        self.positionLabel.text = f'Coodinate: {self.position}'
         self.label.draw()
+        self.positionLabel.draw()
 
     def draw_reticle(self):
         """ Draw the crosshairs in the center of the screen.
