@@ -683,7 +683,7 @@ class Window(pyglet.window.Window):
                 d = (p[i] - np[i]) * face[i]
                 if d < pad:
                     continue
-                for dy in xrange(height):  # check each height
+                for dy in xrange(int(height)):  # check each height
                     op = list(np)
                     op[1] -= dy
                     op[i] += face[i]
