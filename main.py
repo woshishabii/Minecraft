@@ -811,7 +811,7 @@ class Window(pyglet.window.Window):
 
         """
         # label
-        self.label.y = height - 10
+        # self.label.y = height - 10
         # reticle
         if self.reticle:
             self.reticle.delete()
