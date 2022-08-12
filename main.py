@@ -69,7 +69,7 @@ version.read(get_resource_path('version'))
 version = version['DEFAULT']
 
 # 加载字体
-pyglet.font.add_file('Minecraft.ttf')
+pyglet.font.add_file(get_resource_path('Minecraft.ttf'))
 
 
 
