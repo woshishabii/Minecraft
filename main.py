@@ -545,7 +545,7 @@ class Window(pyglet.window.Window):
         # self.looking_at_label = pyglet.text.Label('Looking At:', font)
         # TODO 
         # TEST LABEL for POSITION
-        self.debugScreen = pyglet.text.Label('position', font_name='Minecraft', font_size=18,
+        self.debugScreen = pyglet.text.Label('position', font_name='Minecraft', font_size=10,
                                        x=10, y=10, anchor_x='left', anchor_y='bottom',
                                        color=(0, 0, 0, 255))
 
@@ -906,7 +906,7 @@ class Window(pyglet.window.Window):
             pyglet.clock.get_fps(), x, y, z,
             len(self.model._shown), len(self.model.world))
         '''
-        self.debugScreen.text = f'''Coordinate: {normalize(self.position)}<br>
+        self.debugScreen.text = f'''Coordinate: {normalize(self.position)}
         Version: {version['STAGE']} {version['VERSION']}'''
         # self.label.draw()
         self.debugScreen.draw()
