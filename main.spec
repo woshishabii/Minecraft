@@ -1,7 +1,7 @@
 # -*- mode: python ; coding: utf-8 -*-
 import time
 import configparser
-import subprocess
+import pathlib
 
 cp = configparser.ConfigParser()
 cp.read('version')
