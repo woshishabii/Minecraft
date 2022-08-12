@@ -1,5 +1,17 @@
 # -*- mode: python ; coding: utf-8 -*-
 import time
+import configparser
+
+cp = configparser.ConfigParser()
+cp.read('version')
+
+def get_git_revision_hash() -> str:
+    return subprocess.check_output(['git', 'rev-parse', '--short', 'HEAD']).decode('ascii').strip()
+
+with open('commit_info', 'w') as commit_info:
+    commit_info.write(get_git_revision_hash())
+
+gen_name = f'{cp["DEFAULT"]["STAGE"]}-{cp["DEFAULT"]["VERSION"]}-{time.strftime("%Y%m%d%H%M%S", time.localtime())}-{get_git_revision_hash()}'
 
 block_cipher = None
 
@@ -11,7 +23,8 @@ a = Analysis(['main.py'],
                     ('texture.png', '.'), 
                     ('pywintypes310.dll', '.'), 
                     ('version', '.'),
-                    ('Minecraft.ttf', '.')],
+                    ('Minecraft.ttf', '.'),
+                    ('connit_info', '.')],
              hiddenimports=[],
              hookspath=[],
              runtime_hooks=[],
@@ -28,7 +41,7 @@ exe = EXE(pyz,
           a.zipfiles,
           a.datas,
           [],
-          name=time.strftime("%Y%m%d%H%M%S", time.localtime()),
+          name=gen_name,
           debug=False,
           bootloader_ignore_signals=False,
           strip=False,

@@ -68,6 +68,11 @@ version = configparser.ConfigParser()
 version.read(get_resource_path('version'))
 version = version['DEFAULT']
 
+with open('commit_info') as commit_info:
+    revision_hash = commit_info.read()
+
+
+
 # 加载字体
 pyglet.font.add_file(get_resource_path('Minecraft.ttf'))
 
@@ -907,7 +912,7 @@ class Window(pyglet.window.Window):
             len(self.model._shown), len(self.model.world))
         '''
         self.debugScreen.text = f'''Coordinate: {normalize(self.position)}
-        Version: {version['STAGE']} {version['VERSION']}'''
+        Version: {version['STAGE']}-{version['VERSION']}-{revision_hash}'''
         # self.label.draw()
         self.debugScreen.draw()
 
