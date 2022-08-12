@@ -68,7 +68,7 @@ version = configparser.ConfigParser()
 version.read(get_resource_path('version'))
 version = version['DEFAULT']
 
-with open('commit_info') as commit_info:
+with open(get_resource_path('commit_info')) as commit_info:
     revision_hash = commit_info.read()
 
 
