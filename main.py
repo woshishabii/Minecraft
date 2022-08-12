@@ -68,6 +68,9 @@ version = configparser.ConfigParser()
 version.read(get_resource_path('version'))
 version = version['DEFAULT']
 
+# 加载字体
+pyglet.font.add_file('Minecraft.ttf')
+
 
 
 def cube_vertices(x, y, z, n):
@@ -483,6 +486,7 @@ class Window(pyglet.window.Window):
         super(Window, self).__init__(*args, **kwargs)
 
         # Whether or not the window exclusively captures the mouse.
+        # 获取焦点
         self.exclusive = False
 
         # When flying gravity has no effect and speed is increased.
@@ -538,9 +542,10 @@ class Window(pyglet.window.Window):
                                        color=(0, 0, 0, 255))
         '''
 
+        # self.looking_at_label = pyglet.text.Label('Looking At:', font)
         # TODO 
         # TEST LABEL for POSITION
-        self.debugScreen = pyglet.text.Label('position', font_name='Arial', font_size=18,
+        self.debugScreen = pyglet.text.Label('position', font_name='Minecraft', font_size=18,
                                        x=10, y=10, anchor_x='left', anchor_y='bottom',
                                        color=(0, 0, 0, 255))
 
