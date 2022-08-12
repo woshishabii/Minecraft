@@ -7,7 +7,11 @@ cp = configparser.ConfigParser()
 cp.read('version')
 
 def get_git_revision_hash() -> str:
-    return subprocess.check_output(['git', 'rev-parse', '--short', 'HEAD']).decode('ascii').strip()
+    git_dir = pathlib.Path('.') / '.git'
+    with (git_dir / 'HEAD').open('r') as head:
+        ref = head.readline().split(' ')[-1].strip()
+    with (git_dir / ref).open('r') as git_hash:
+        return git_hash.readline().strip()[:6]
 
 with open('commit_info', 'w') as commit_info:
     commit_info.write(get_git_revision_hash())
