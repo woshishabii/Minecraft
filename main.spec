@@ -7,7 +7,11 @@ block_cipher = None
 a = Analysis(['main.py'],
              pathex=['/new/PycharmProjects/Minecraft'],
              binaries=[],
-             datas=[('texture.png', '.'), ('pywintypes310.dll', '.'), ('version', '.')],
+             datas=[
+                    ('texture.png', '.'), 
+                    ('pywintypes310.dll', '.'), 
+                    ('version', '.'),
+                    ('Minecraft.ttf', '.')],
              hiddenimports=[],
              hookspath=[],
              runtime_hooks=[],
