@@ -560,7 +560,7 @@ class Window(pyglet.window.Window):
         # TEST LABEL for POSITION
         self.debugScreen = pyglet.text.Label('position', font_name='Minecraft', font_size=8,
                                        x=10, y=self.height-10, anchor_x='left', anchor_y='top',
-                                       multiline=True,
+                                       width=self.width/2-10, multiline=True,
                                        color=(0, 0, 0, 255))
 
         # This call schedules the `update()` method to be called
