@@ -991,7 +991,7 @@ def setup():
 
 def main():
     print(__file__)
-    window = Window(width=800, height=600, caption='Pyglet', resizable=True)
+    window = Window(width=854, height=480, caption='Pyglet', resizable=True)
     # Hide the mouse cursor and prevent the mouse from leaving the window.
     window.set_exclusive_mouse(True)
     setup()
