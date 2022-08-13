@@ -927,7 +927,7 @@ class Window(pyglet.window.Window):
             len(self.model._shown), len(self.model.world))
         '''
         x, y, z = self.position
-        x_r, y_r, z_r = normalize(position)
+        x_r, y_r, z_r = normalize(self.position)
         self.debugScreen.text = f'Minecraft {version["STAGE"]}-{version["VERSION"]}-{revision_hash}\n' \
                                 f'{pyglet.clock.get_fps()} fps\n' \
                                  '\n' \
