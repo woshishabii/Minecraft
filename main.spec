@@ -11,7 +11,7 @@ def get_git_revision_hash() -> str:
     with (git_dir / 'HEAD').open('r') as head:
         ref = head.readline().split(' ')[-1].strip()
     with (git_dir / ref).open('r') as git_hash:
-        return git_hash.readline().strip()[:6]
+        return git_hash.readline().strip()[:7]
 
 with open('commit_info', 'w') as commit_info:
     commit_info.write(get_git_revision_hash())

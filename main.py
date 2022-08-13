@@ -68,8 +68,15 @@ version = configparser.ConfigParser()
 version.read(get_resource_path('version'))
 version = version['DEFAULT']
 
-with open(get_resource_path('commit_info')) as commit_info:
-    revision_hash = commit_info.read()
+if os.path.exists('.git'):
+    git_dir = pathlib.Path('.') / '.git'
+    with (git_dir / 'HEAD').open('r') as head:
+        ref = head.readline().split(' ')[-1].strip()
+    with (git_dir / ref).open('r') as git_hash:
+        revision_hash = 'dev-' + git_hash.readline().strip()[:7]
+else:
+    with open(get_resource_path('commit_info')) as commit_info:
+        revision_hash = commit_info.read()
 
 
 
