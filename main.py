@@ -80,10 +80,8 @@ else:
         revision_hash = commit_info.read()
 
 
-
 # 加载字体
 pyglet.font.add_file(get_resource_path('Minecraft.ttf'))
-
 
 
 def cube_vertices(x, y, z, n):
@@ -91,12 +89,18 @@ def cube_vertices(x, y, z, n):
 
     """
     return [
-        x - n, y + n, z - n, x - n, y + n, z + n, x + n, y + n, z + n, x + n, y + n, z - n,  # top
-        x - n, y - n, z - n, x + n, y - n, z - n, x + n, y - n, z + n, x - n, y - n, z + n,  # bottom
-        x - n, y - n, z - n, x - n, y - n, z + n, x - n, y + n, z + n, x - n, y + n, z - n,  # left
-        x + n, y - n, z + n, x + n, y - n, z - n, x + n, y + n, z - n, x + n, y + n, z + n,  # right
-        x - n, y - n, z + n, x + n, y - n, z + n, x + n, y + n, z + n, x - n, y + n, z + n,  # front
-        x + n, y - n, z - n, x - n, y - n, z - n, x - n, y + n, z - n, x + n, y + n, z - n,  # back
+        x - n, y + n, z - n, x - n, y + n, z + n, x +
+        n, y + n, z + n, x + n, y + n, z - n,  # top
+        x - n, y - n, z - n, x + n, y - n, z - n, x + \
+        n, y - n, z + n, x - n, y - n, z + n,  # bottom
+        x - n, y - n, z - n, x - n, y - n, z + n, x - \
+        n, y + n, z + n, x - n, y + n, z - n,  # left
+        x + n, y - n, z + n, x + n, y - n, z - n, x + \
+        n, y + n, z - n, x + n, y + n, z + n,  # right
+        x - n, y - n, z + n, x + n, y - n, z + n, x + \
+        n, y + n, z + n, x - n, y + n, z + n,  # front
+        x + n, y - n, z - n, x - n, y - n, z - n, x - \
+        n, y + n, z - n, x + n, y + n, z - n,  # back
     ]
 
 
@@ -163,8 +167,8 @@ def normalize(position):
 
 def sectorize(position):
     """ Returns a tuple representing the sector for the given `position`.
-	返回当前的区块坐标
-	
+        返回当前的区块坐标
+
     Parameters
     ----------
     position : tuple of len 3
@@ -556,12 +560,12 @@ class Window(pyglet.window.Window):
         '''
 
         # self.looking_at_label = pyglet.text.Label('Looking At:', font)
-        # TODO 
+        # TODO
         # TEST LABEL for POSITION
         self.debugScreen = pyglet.text.Label('position', font_name='Minecraft', font_size=12,
-                                       x=10, y=self.height-10, anchor_x='left', anchor_y='top',
-                                       width=self.width/2-10, multiline=True,
-                                       color=(221, 221, 221, 255))
+                                             x=10, y=self.height-10, anchor_x='left', anchor_y='top',
+                                             width=self.width/2-10, multiline=True,
+                                             color=(221, 221, 221, 255))
 
         # This call schedules the `update()` method to be called
         # TICKS_PER_SEC. This is the main game event loop.
@@ -847,7 +851,8 @@ class Window(pyglet.window.Window):
         x, y = self.width // 2, self.height // 2
         n = 10
         self.reticle = pyglet.graphics.vertex_list(4,
-                                                   ('v2i', (x - n, y, x + n, y, x, y - n, x, y + n))
+                                                   ('v2i', (x - n, y, x + n,
+                                                    y, x, y - n, x, y + n))
                                                    )
 
     def set_2d(self):
@@ -921,8 +926,15 @@ class Window(pyglet.window.Window):
             pyglet.clock.get_fps(), x, y, z,
             len(self.model._shown), len(self.model.world))
         '''
-        self.debugScreen.text = f'Coordinate: {normalize(self.position)}\n' \
-                                f'Version: {version["STAGE"]}-{version["VERSION"]}-{revision_hash}'
+        x, y, z = self.position
+        x_r, y_r, z_r = normalize(position)
+        self.debugScreen.text = f'Minecraft {version["STAGE"]}-{version["VERSION"]}-{revision_hash}\n' \
+                                f'{pyglet.clock.get_fps()} fps\n' \
+                                 '\n' \
+                                f'XYZ: {x} / {y} / {z}\n' \
+                                f'Block: {x_r} {y_r} {z_r}'
+
+                                
         # self.label.draw()
         self.debugScreen.draw()
 
