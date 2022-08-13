@@ -839,7 +839,7 @@ class Window(pyglet.window.Window):
 
         """
         # label
-        # self.label.y = height - 10
+        self.debugScreen.y = height - 10
         # reticle
         if self.reticle:
             self.reticle.delete()
@@ -920,8 +920,8 @@ class Window(pyglet.window.Window):
             pyglet.clock.get_fps(), x, y, z,
             len(self.model._shown), len(self.model.world))
         '''
-        self.debugScreen.text = f'''Coordinate: {normalize(self.position)}
-        Version: {version['STAGE']}-{version['VERSION']}-{revision_hash}'''
+        self.debugScreen.text = f'Coordinate: {normalize(self.position)}\n' \
+                                f'Version: {version["STAGE"]}-{version["VERSION"]}-{revision_hash}'
         # self.label.draw()
         self.debugScreen.draw()
 
