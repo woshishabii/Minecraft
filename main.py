@@ -558,7 +558,7 @@ class Window(pyglet.window.Window):
         # self.looking_at_label = pyglet.text.Label('Looking At:', font)
         # TODO 
         # TEST LABEL for POSITION
-        self.debugScreen = pyglet.text.Label('position', font_name='Minecraft', font_size=8,
+        self.debugScreen = pyglet.text.Label('position', font_name='Minecraft', font_size=12,
                                        x=10, y=self.height-10, anchor_x='left', anchor_y='top',
                                        width=self.width/2-10, multiline=True,
                                        color=(0, 0, 0, 255))
