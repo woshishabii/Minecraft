@@ -561,7 +561,7 @@ class Window(pyglet.window.Window):
         self.debugScreen = pyglet.text.Label('position', font_name='Minecraft', font_size=12,
                                        x=10, y=self.height-10, anchor_x='left', anchor_y='top',
                                        width=self.width/2-10, multiline=True,
-                                       color=(255, 255, 255, 255))
+                                       color=(221, 221, 221, 255))
 
         # This call schedules the `update()` method to be called
         # TICKS_PER_SEC. This is the main game event loop.
