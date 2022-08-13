@@ -146,7 +146,7 @@ FACES = [
 ]
 
 
-def normalize(position):
+def normalize(position, ndigits=None):
     """ Accepts `position` of arbitrary precision and returns the block
     containing that position.
     返回当前的整数坐标
@@ -161,7 +161,10 @@ def normalize(position):
 
     """
     x, y, z = position
-    x, y, z = (int(round(x)), int(round(y)), int(round(z)))
+    if ndigits is None:
+        x, y, z = (int(round(x)), int(round(y)), int(round(z)))
+    else:
+        x, y, z = (round(x, ndigits), round(y, ndigits), round(z, ndigits))
     return (x, y, z)
 
 
@@ -926,10 +929,10 @@ class Window(pyglet.window.Window):
             pyglet.clock.get_fps(), x, y, z,
             len(self.model._shown), len(self.model.world))
         '''
-        x, y, z = self.position
+        x, y, z = normalize(self.position, ndigits=3)
         x_r, y_r, z_r = normalize(self.position)
         self.debugScreen.text = f'Minecraft {version["STAGE"]}-{version["VERSION"]}-{revision_hash}\n' \
-                                f'{pyglet.clock.get_fps()} fps\n' \
+                                f'{round(pyglet.clock.get_fps())} fps\n' \
                                  '\n' \
                                 f'XYZ: {x} / {y} / {z}\n' \
                                 f'Block: {x_r} {y_r} {z_r}'
