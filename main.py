@@ -840,6 +840,7 @@ class Window(pyglet.window.Window):
         """
         # label
         self.debugScreen.y = height - 10
+        self.debugScreen.width = height / 2 - 10
         # reticle
         if self.reticle:
             self.reticle.delete()
