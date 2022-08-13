@@ -812,6 +812,8 @@ class Window(pyglet.window.Window):
                 self.dy = JUMP_SPEED
         elif symbol == key.F1:
             self.close()
+        elif symbol == key.F2:
+            print(self.rotation)
         elif symbol == key.ESCAPE:
             self.set_exclusive_mouse(False)
         elif symbol == key.TAB:
