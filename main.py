@@ -216,7 +216,7 @@ class Model(object):
         初始化世界
 
         """
-        # 世界高度的1/2, 可理解为MC JE 中的水平面(TODO)
+        # 世界宽度的一半
         n = 80  # 1/2 width and height of world
         s = 1  # step size
         y = 0  # initial y height
@@ -226,10 +226,10 @@ class Model(object):
                 # 创建地基
                 self.add_block((x, y - 2, z), GRASS, immediate=False)
                 self.add_block((x, y - 3, z), STONE, immediate=False)
-                if x in (-n, n) or z in (-n, n):
-                    # create outer walls.
-                    for dy in xrange(-2, 3):
-                        self.add_block((x, y + dy, z), STONE, immediate=False)
+                # if x in (-n, n) or z in (-n, n):
+                #    # create outer walls.
+                #    for dy in xrange(-2, 3):
+                #         self.add_block((x, y + dy, z), STONE, immediate=False)
 
         # generate the hills randomly
         # 随机生成山丘地形
