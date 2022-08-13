@@ -7,6 +7,7 @@ import math
 import random
 import time
 import configparser
+import pathlib
 
 from collections import deque
 from pyglet import image
