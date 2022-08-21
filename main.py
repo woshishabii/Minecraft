@@ -232,7 +232,9 @@ class Model(object):
                 # create a layer stone an grass everywhere.
                 # 创建地基
                 self.add_block((x, y - 2, z), GRASS, immediate=False)
+                time.sleep(0.1)
                 self.add_block((x, y - 3, z), STONE, immediate=False)
+                time.sleep(0.1)
                 # if x in (-n, n) or z in (-n, n):
                 #    # create outer walls.
                 #    for dy in xrange(-2, 3):
@@ -301,16 +303,20 @@ class Model(object):
 
     def add_block(self, position, texture, immediate=True):
         """ Add a block with the given `texture` and `position` to the world.
+        在指定的坐标上添加指定材质的方块
 
         Parameters
         ----------
         position : tuple of len 3
             The (x, y, z) position of the block to add.
+            添加方块的坐标
         texture : list of len 3
             The coordinates of the texture squares. Use `tex_coords()` to
             generate.
+            贴图在材质(TEXTURE_PATH)上的坐标(由tex_coords()生成)
         immediate : bool
             Whether or not to draw the block immediately.
+            是否立即绘制方块
 
         """
         if position in self.world:
@@ -324,13 +330,16 @@ class Model(object):
 
     def remove_block(self, position, immediate=True):
         """ Remove the block at the given `position`.
+        移除在指定目标上的方块
 
         Parameters
         ----------
         position : tuple of len 3
             The (x, y, z) position of the block to remove.
+            要删除的方块的坐标
         immediate : bool
             Whether or not to immediately remove block from canvas.
+            是否立即移除
 
         """
         del self.world[position]
@@ -345,6 +354,8 @@ class Model(object):
         state is current. This means hiding blocks that are not exposed and
         ensuring that all exposed blocks are shown. Usually used after a block
         is added or removed.
+        检查方块是否被遮挡, 如果被完全遮挡就不再渲染这个方块(hide_block()), 否则渲染
+        这个方块(show_block()), 一般用于添加或删除方块之后
 
         """
         x, y, z = position
@@ -380,15 +391,17 @@ class Model(object):
 
     def _show_block(self, position, texture):
         """ Private implementation of the `show_block()` method.
+        show_block()方法的私有实现
 
         Parameters
         ----------
         position : tuple of len 3
             The (x, y, z) position of the block to show.
+            需要展示的方块的坐标(x, y, z)
         texture : list of len 3
             The coordinates of the texture squares. Use `tex_coords()` to
             generate.
-
+            材质坐标数组(使用tex_coords()生成)
         """
         x, y, z = position
         vertex_data = cube_vertices(x, y, z, 0.5)
