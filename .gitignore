@@ -3,3 +3,7 @@ new.spec
 
 build
 dist
+
+# temporary
+requirement.txt
+system-info.py
