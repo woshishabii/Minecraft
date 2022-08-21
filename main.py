@@ -232,9 +232,7 @@ class Model(object):
                 # create a layer stone an grass everywhere.
                 # 创建地基
                 self.add_block((x, y - 2, z), GRASS, immediate=False)
-                time.sleep(0.1)
                 self.add_block((x, y - 3, z), STONE, immediate=False)
-                time.sleep(0.1)
                 # if x in (-n, n) or z in (-n, n):
                 #    # create outer walls.
                 #    for dy in xrange(-2, 3):
