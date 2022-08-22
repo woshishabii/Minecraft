@@ -54,7 +54,7 @@ PLAYER_HEIGHT = 2
 
 # WORLD_WIDTH
 # 世界宽度
-WORLD_WIDTH = 64
+WORLD_WIDTH = 128
 
 # Py2 Py3 版本兼容
 if sys.version_info[0] >= 3:
