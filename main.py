@@ -1067,7 +1067,8 @@ def setup():
 
     """
     # Set the color of "clear", i.e. the sky, in rgba.
-    glClearColor(0.5, 0.69, 1.0, 1)
+    # 设置GL_CLEAR颜色, 体现为天空
+    glClearColor(1.0, 0.8, 0.6, 1)
     # Enable culling (not rendering) of back-facing facets -- facets that aren't
     # visible to you.
     glEnable(GL_CULL_FACE)
@@ -1078,6 +1079,7 @@ def setup():
     # as smooth."
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST)
+    # 初始化视野雾
     # setup_fog()
 
 
@@ -1085,6 +1087,7 @@ def main():
     print(__file__)
     window = Window(width=854, height=480, caption='Pyglet', resizable=True)
     # Hide the mouse cursor and prevent the mouse from leaving the window.
+    # 隐藏鼠标并阻止其离开窗口
     window.set_exclusive_mouse(True)
     setup()
     pyglet.app.run()
