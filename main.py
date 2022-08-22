@@ -572,7 +572,7 @@ class Window(pyglet.window.Window):
 
         # Full Screen
         # 全屏
-        self.fullscreen = False
+        self.full_screen = False
 
         # A list of blocks the player can place. Hit num keys to cycle.
         # 方块列表(使用数字键盘切换)
