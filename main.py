@@ -52,6 +52,10 @@ TERMINAL_VELOCITY = 50
 # 玩家模型高度
 PLAYER_HEIGHT = 2
 
+# WORLD_WIDTH
+# 世界宽度
+WORLD_WIDTH = 64
+
 # Py2 Py3 版本兼容
 if sys.version_info[0] >= 3:
     xrange = range
@@ -226,7 +230,7 @@ class Model(object):
 
         """
         # 世界长宽的一半
-        n = 64  # 1/2 width and height of world
+        # n = 64  # 1/2 width and height of world(deprecated)
         s = 1  # step size
         # y = 0  # initial y height 初始y坐标
         # for x in xrange(-n, n + 1, s):
@@ -239,8 +243,8 @@ class Model(object):
         #         #    # create outer walls.
         #         #    for dy in xrange(-2, 3):
         #         #         self.add_block((x, y + dy, z), STONE, immediate=False)
-        for x in xrange(-n, n + 1, s):
-            for z in xrange(-n, n + 1, s):
+        for x in xrange(-WORLD_WIDTH, WORLD_WIDTH + 1, s):
+            for z in xrange(-WORLD_WIDTH, WORLD_WIDTH + 1, s):
                 # Add STONE LAYER
                 for y in xrange(0, 64, s):
                     self.add_block((x, y, z), STONE, immediate=False)
