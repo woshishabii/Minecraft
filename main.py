@@ -228,22 +228,23 @@ class Model(object):
         # 世界长宽的一半
         n = 128  # 1/2 width and height of world
         s = 1  # step size
-        y = 0  # initial y height
-        for x in xrange(-n, n + 1, s):
-            for z in xrange(-n, n + 1, s):
-                # create a layer stone an grass everywhere.
-                # 创建地基
-                self.add_block((x, y - 2, z), GRASS, immediate=False)
-                self.add_block((x, y - 3, z), STONE, immediate=False)
-                # if x in (-n, n) or z in (-n, n):
-                #    # create outer walls.
-                #    for dy in xrange(-2, 3):
-                #         self.add_block((x, y + dy, z), STONE, immediate=False)
+        # y = 0  # initial y height 初始y坐标
         # for x in xrange(-n, n + 1, s):
         #     for z in xrange(-n, n + 1, s):
-        #         # Add STONE LAYER
-        #         for y in xrange():
-        #             pass
+        #         # create a layer stone an grass everywhere.
+        #         # 创建地基
+        #         self.add_block((x, y - 2, z), GRASS, immediate=False)
+        #         self.add_block((x, y - 3, z), STONE, immediate=False)
+        #         # if x in (-n, n) or z in (-n, n):
+        #         #    # create outer walls.
+        #         #    for dy in xrange(-2, 3):
+        #         #         self.add_block((x, y + dy, z), STONE, immediate=False)
+        for x in xrange(-n, n + 1, s):
+            for z in xrange(-n, n + 1, s):
+                # Add STONE LAYER
+                for y in xrange(0, 64, s):
+                    self.add_block((x, y, z), STONE, immediate=False)
+                self.add_block((x, 64, z), GRASS, immediate=False)
 
 
         # generate the hills randomly
