@@ -141,6 +141,11 @@ GRASS = tex_coords((0, 0), (0, 0), (0, 0))
 # BRICK = tex_coords((2, 0), (2, 0), (2, 0))
 STONE = tex_coords((1, 0), (1, 0), (1, 0))
 
+BLOCKS = [
+    GRASS,
+    STONE
+]
+
 FACES = [
     (0, 1, 0),
     (0, -1, 0),
@@ -592,7 +597,7 @@ class Window(pyglet.window.Window):
 
         # A list of blocks the player can place. Hit num keys to cycle.
         # 方块列表(使用数字键盘切换)
-        self.inventory = [STONE, GRASS]
+        self.inventory = BLOCKS
 
         # The current block the user can place. Hit num keys to cycle.
         # 当前手持
