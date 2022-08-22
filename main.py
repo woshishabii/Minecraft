@@ -923,6 +923,8 @@ class Window(pyglet.window.Window):
         elif symbol == key.F4:
             # 调试-打印旋转角度
             print(self.rotation)
+        elif symbol == key.F5:
+            print(self.model.world)
         elif symbol == key.F11:
             self.full_screen = not self.full_screen
             self.set_fullscreen(self.full_screen)
