@@ -611,6 +611,12 @@ class Window(pyglet.window.Window):
         # 使用pyglet.schedule_interval实现的定期更新
         pyglet.clock.schedule_interval(self.update, 1.0 / TICKS_PER_SEC)
 
+        # Check if screenshot exists
+        if os.path.exists('screenshots'):
+            pass
+        else:
+            os.mkdir('screenshots')
+
     def set_exclusive_mouse(self, exclusive):
         """ If `exclusive` is True, the game will capture the mouse, if False
         the game will ignore the mouse.
