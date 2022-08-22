@@ -11,3 +11,5 @@ system-info.py
 commit_info
 
 screenshots
+
+__pycache__
