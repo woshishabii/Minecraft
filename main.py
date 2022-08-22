@@ -570,6 +570,10 @@ class Window(pyglet.window.Window):
         # 数值速度(?)
         self.dy = 0
 
+        # Full Screen
+        # 全屏
+        self.fullscreen = False
+
         # A list of blocks the player can place. Hit num keys to cycle.
         # 方块列表(使用数字键盘切换)
         self.inventory = [BRICK, GRASS, SAND]
@@ -890,6 +894,9 @@ class Window(pyglet.window.Window):
         elif symbol == key.F4:
             # 调试-打印旋转角度
             print(self.rotation)
+        elif symbol == key.F11:
+            self.fullscreen = not self.fullscreen
+            self.set_fullscreen(self.fullscreen)
         elif symbol == key.ESCAPE:
             # 释放鼠标
             self.set_exclusive_mouse(False)
@@ -927,9 +934,12 @@ class Window(pyglet.window.Window):
 
         """
         # label
+        # 文本
+        # 调试文本
         self.debugScreen.y = height - 10
         self.debugScreen.width = width * 0.6
         # reticle
+        # 准星
         if self.reticle:
             self.reticle.delete()
         x, y = self.width // 2, self.height // 2
