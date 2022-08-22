@@ -108,7 +108,7 @@ def tex_coord(x, y, n=4):
     """ Return the bounding vertices of the texture square.
 
     """
-    m = 1.0 / n
+    m = 0.25 / n
     dx = x * m
     dy = y * m
     return dx, dy, dx + m, dy, dx + m, dy + m, dx, dy + m
@@ -132,10 +132,10 @@ def tex_coords(top, bottom, side):
 TEXTURE_PATH = get_resource_path('terrain.png')
 
 # 定义方块材质
-GRASS = tex_coords((1, 0), (0, 1), (0, 0))
-SAND = tex_coords((1, 1), (1, 1), (1, 1))
-BRICK = tex_coords((2, 0), (2, 0), (2, 0))
-STONE = tex_coords((2, 1), (2, 1), (2, 1))
+GRASS = tex_coords((0, 0), (0, 0), (0, 0))
+# SAND = tex_coords((1, 1), (1, 1), (1, 1))
+# BRICK = tex_coords((2, 0), (2, 0), (2, 0))
+STONE = tex_coords((1, 0), (1, 0), (1, 0))
 
 FACES = [
     (0, 1, 0),
@@ -328,6 +328,8 @@ class Model(object):
         """
         if position in self.world:
             self.remove_block(position, immediate)
+        if position[1] < 0:
+            return
         self.world[position] = texture
         self.sectors.setdefault(sectorize(position), []).append(position)
         if immediate:
@@ -583,7 +585,7 @@ class Window(pyglet.window.Window):
 
         # A list of blocks the player can place. Hit num keys to cycle.
         # 方块列表(使用数字键盘切换)
-        self.inventory = [BRICK, GRASS, SAND]
+        self.inventory = [STONE, GRASS]
 
         # The current block the user can place. Hit num keys to cycle.
         # 当前手持
@@ -831,8 +833,9 @@ class Window(pyglet.window.Window):
                     self.model.add_block(previous, self.block)
             elif button == pyglet.window.mouse.LEFT and block:
                 texture = self.model.world[block]
-                if texture != STONE:
-                    self.model.remove_block(block)
+                # if texture != STONE:
+                #     self.model.remove_block(block)
+                self.model.remove_block(block)
         else:
             self.set_exclusive_mouse(True)
 
@@ -1039,7 +1042,7 @@ class Window(pyglet.window.Window):
         else:
             self.debugScreen.text = ''
 
-                                
+
         # self.label.draw()
         self.debugScreen.draw()
 
