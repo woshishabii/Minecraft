@@ -252,8 +252,8 @@ class Model(object):
             for z in xrange(-WORLD_WIDTH, WORLD_WIDTH + 1, s):
                 # Add STONE LAYER
                 for y in xrange(0, 64, s):
-                    self.add_block((x, y, z), STONE, immediate=False)
-                self.add_block((x, 64, z), GRASS, immediate=False)
+                    self.add_block((x, y, z), 1, immediate=False)
+                self.add_block((x, 64, z), 0, immediate=False)
 
 
         # generate the hills randomly
@@ -318,7 +318,7 @@ class Model(object):
                 return True
         return False
 
-    def add_block(self, position, texture, immediate=True):
+    def add_block(self, position, block_id, immediate=True):
         """ Add a block with the given `texture` and `position` to the world.
         在指定的坐标上添加指定材质的方块
 
@@ -327,10 +327,12 @@ class Model(object):
         position : tuple of len 3
             The (x, y, z) position of the block to add.
             添加方块的坐标
-        texture : list of len 3
+        block_id : list of len 3
             The coordinates of the texture squares. Use `tex_coords()` to
             generate.
             贴图在材质(TEXTURE_PATH)上的坐标(由tex_coords()生成)
+            The Block ID to add to world, index of BLOCKS
+            方块ID, 为BLOCKS的索引
         immediate : bool
             Whether or not to draw the block immediately.
             是否立即绘制方块
@@ -342,7 +344,7 @@ class Model(object):
         # 检查坐标
         if (position[1] < 0) or (position[0] > WORLD_WIDTH) or (position[2] > WORLD_WIDTH) or (position[0] < -WORLD_WIDTH) or (position[2] < -WORLD_WIDTH):
             return
-        self.world[position] = texture
+        self.world[position] = block_id
         self.sectors.setdefault(sectorize(position), []).append(position)
         if immediate:
             if self.exposed(position):
@@ -404,7 +406,7 @@ class Model(object):
             Whether or not to show the block immediately.
 
         """
-        texture = self.world[position]
+        texture = BLOCKS[self.world[position]]
         self.shown[position] = texture
         if immediate:
             self._show_block(position, texture)
@@ -844,7 +846,7 @@ class Window(pyglet.window.Window):
                 if previous:
                     self.model.add_block(previous, self.block)
             elif button == pyglet.window.mouse.LEFT and block:
-                texture = self.model.world[block]
+                texture = BLOCKS[self.model.world[block]]
                 # if texture != STONE:
                 #     self.model.remove_block(block)
                 self.model.remove_block(block)
