@@ -1,15 +1,15 @@
 # 除法精度更新(对于Py2)
 from __future__ import division
 
-import sys
-import os
-import math
-import random
-import time
 import configparser
+import math
+import os
 import pathlib
-
+import random
+import sys
+import time
 from collections import deque
+
 from pyglet import image
 from pyglet.gl import *
 from pyglet.graphics import TextureGroup
@@ -129,7 +129,7 @@ def tex_coords(top, bottom, side):
 
 
 # 材质包路径
-TEXTURE_PATH = get_resource_path('texture.png')
+TEXTURE_PATH = get_resource_path('terrain.png')
 
 # 定义方块材质
 GRASS = tex_coords((1, 0), (0, 1), (0, 0))
@@ -222,10 +222,11 @@ class Model(object):
     def _initialize(self):
         """ Initialize the world by placing all the blocks.
         初始化世界
+        TODO
 
         """
-        # 世界宽度的一半
-        n = 80  # 1/2 width and height of world
+        # 世界长宽的一半
+        n = 128  # 1/2 width and height of world
         s = 1  # step size
         y = 0  # initial y height
         for x in xrange(-n, n + 1, s):
@@ -238,6 +239,12 @@ class Model(object):
                 #    # create outer walls.
                 #    for dy in xrange(-2, 3):
                 #         self.add_block((x, y + dy, z), STONE, immediate=False)
+        # for x in xrange(-n, n + 1, s):
+        #     for z in xrange(-n, n + 1, s):
+        #         # Add STONE LAYER
+        #         for y in xrange():
+        #             pass
+
 
         # generate the hills randomly
         # 随机生成山丘地形
@@ -888,6 +895,7 @@ class Window(pyglet.window.Window):
         elif symbol == key.F2:
             # 截图
             pyglet.image.get_buffer_manager().get_color_buffer().save(time.strftime('screenshots/%Y-%m-%d_%H.%M.%S.png'))
+            print(f'Screenshot saved to {time.strftime("%Y-%m-%d_%H.%M.%S.png")}')
         elif symbol == key.F3:
             # 切换显示调试屏幕
             self.enable_debugScreen = not self.enable_debugScreen
@@ -1071,6 +1079,7 @@ def setup():
     glClearColor(0.5, 0.69, 1.0, 1)
     # Enable culling (not rendering) of back-facing facets -- facets that aren't
     # visible to you.
+    # 启用不可见面不渲染
     glEnable(GL_CULL_FACE)
     # Set the texture minification/magnification function to GL_NEAREST (nearest
     # in Manhattan distance) to the specified texture coordinates. GL_NEAREST
@@ -1084,8 +1093,8 @@ def setup():
 
 
 def main():
-    print(__file__)
-    window = Window(width=854, height=480, caption='Pyglet', resizable=True)
+    # print(__file__)
+    window = Window(width=854, height=480, caption='Minecraft:Python Edition', resizable=True)
     # Hide the mouse cursor and prevent the mouse from leaving the window.
     # 隐藏鼠标并阻止其离开窗口
     window.set_exclusive_mouse(True)
