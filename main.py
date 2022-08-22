@@ -128,6 +128,7 @@ def tex_coords(top, bottom, side):
     return result
 
 
+# 材质包路径
 TEXTURE_PATH = get_resource_path('texture.png')
 
 # 定义方块材质
@@ -291,6 +292,7 @@ class Model(object):
     def exposed(self, position):
         """ Returns False is given `position` is surrounded on all 6 sides by
         blocks, True otherwise.
+        检查方块是否被完全遮蔽
 
         """
         x, y, z = position
@@ -371,6 +373,7 @@ class Model(object):
     def show_block(self, position, immediate=True):
         """ Show the block at the given `position`. This method assumes the
         block has already been added with add_block()
+        展示给定位置的方块(已使用add_block方法添加的)
 
         Parameters
         ----------
@@ -413,6 +416,7 @@ class Model(object):
     def hide_block(self, position, immediate=True):
         """ Hide the block at the given `position`. Hiding does not remove the
         block from the world.
+        不渲染指定坐标的方块, 并不会从世界删除这个方块
 
         Parameters
         ----------
@@ -430,6 +434,7 @@ class Model(object):
 
     def _hide_block(self, position):
         """ Private implementation of the 'hide_block()` method.
+        hide_block()的内部实现
 
         """
         self._shown.pop(position).delete()
@@ -437,6 +442,7 @@ class Model(object):
     def show_sector(self, sector):
         """ Ensure all blocks in the given sector that should be shown are
         drawn to the canvas.
+        展示区块中所有应该展示的方块
 
         """
         for position in self.sectors.get(sector, []):
@@ -446,6 +452,7 @@ class Model(object):
     def hide_sector(self, sector):
         """ Ensure all blocks in the given sector that should be hidden are
         removed from the canvas.
+        隐藏区块中所有应该隐藏的方块
 
         """
         for position in self.sectors.get(sector, []):
@@ -481,12 +488,14 @@ class Model(object):
 
     def _enqueue(self, func, *args):
         """ Add `func` to the internal queue.
+        将函数加入队列
 
         """
         self.queue.append((func, args))
 
     def _dequeue(self):
         """ Pop the top function from the internal queue and call it.
+        从内部队列弹出函数并调用
 
         """
         func, args = self.queue.popleft()
@@ -497,6 +506,7 @@ class Model(object):
         the game loop to run smoothly. The queue contains calls to
         _show_block() and _hide_block() so this method should be called if
         add_block() or remove_block() was called with immediate=False
+        处理队列, 这让游戏循环流畅运行
 
         """
         start = time.perf_counter()
@@ -517,10 +527,11 @@ class Window(pyglet.window.Window):
         super(Window, self).__init__(*args, **kwargs)
 
         # Whether or not the window exclusively captures the mouse.
-        # 获取焦点
+        # 标志-获取焦点
         self.exclusive = False
 
         # When flying gravity has no effect and speed is increased.
+        # 标志-飞行状态
         self.flying = False
 
         # Strafing is moving lateral to the direction you are facing,
@@ -533,6 +544,7 @@ class Window(pyglet.window.Window):
 
         # Current (x, y, z) position in the world, specified with floats. Note
         # that, perhaps unlike in math class, the y-axis is the vertical axis.
+        # 当前坐标, y坐标为垂直坐标
         self.position = (0, 0, 0)
 
         # First element is rotation of the player in the x-z plane (ground
@@ -541,32 +553,45 @@ class Window(pyglet.window.Window):
         #
         # The vertical plane rotation ranges from -90 (looking straight down) to
         # 90 (looking straight up). The horizontal rotation range is unbounded.
+        # 视角角度
+        # 第一项为x-z平面(地面)
+        # 第二项为垂直角度(-90-90), -90为竖直向下
         self.rotation = (0, 0)
 
         # Which sector the player is currently in.
+        # 玩家当前所在区块
         self.sector = None
 
         # The crosshairs at the center of the screen.
+        # 准星
         self.reticle = None
 
         # Velocity in the y (upward) direction.
+        # 数值速度(?)
         self.dy = 0
 
         # A list of blocks the player can place. Hit num keys to cycle.
+        # 方块列表(使用数字键盘切换)
         self.inventory = [BRICK, GRASS, SAND]
 
         # The current block the user can place. Hit num keys to cycle.
+        # 当前手持
         self.block = self.inventory[0]
 
         # Convenience list of num keys.
+        # 数字键盘的便捷列表
         self.num_keys = [
             key._1, key._2, key._3, key._4, key._5,
             key._6, key._7, key._8, key._9, key._0]
 
         # Instance of the model that handles the world.
+        # 处理世界的实例
         self.model = Model()
 
+        self.enable_debugScreen = False
+
         # The label that is displayed in the top left of the canvas.
+        # 在画布左上的文本
         '''
         self.label = pyglet.text.Label('', font_name='Arial', font_size=18,
                                        x=10, y=self.height - 10, anchor_x='left', anchor_y='top',
@@ -575,19 +600,21 @@ class Window(pyglet.window.Window):
 
         # self.looking_at_label = pyglet.text.Label('Looking At:', font)
         # TODO
-        # TEST LABEL for POSITION
-        self.debugScreen = pyglet.text.Label('position', font_name='Minecraft', font_size=12,
+        # TEST LABEL for DEBUG
+        self.debugScreen = pyglet.text.Label('', font_name='Minecraft', font_size=12,
                                              x=10, y=self.height-10, anchor_x='left', anchor_y='top',
-                                             width=self.width/2-10, multiline=True,
+                                             width=self.width*3/2, multiline=True,
                                              color=(221, 221, 221, 255))
 
         # This call schedules the `update()` method to be called
         # TICKS_PER_SEC. This is the main game event loop.
+        # 使用pyglet.schedule_interval实现的定期更新
         pyglet.clock.schedule_interval(self.update, 1.0 / TICKS_PER_SEC)
 
     def set_exclusive_mouse(self, exclusive):
         """ If `exclusive` is True, the game will capture the mouse, if False
         the game will ignore the mouse.
+        如果exclusive_mouse标志为True, 游戏将捕获鼠标, 否则忽略输入
 
         """
         super(Window, self).set_exclusive_mouse(exclusive)
@@ -596,6 +623,7 @@ class Window(pyglet.window.Window):
     def get_sight_vector(self):
         """ Returns the current line of sight vector indicating the direction
         the player is looking.
+        返回当前视线的向量
 
         """
         x, y = self.rotation
@@ -613,6 +641,7 @@ class Window(pyglet.window.Window):
     def get_motion_vector(self):
         """ Returns the current motion vector indicating the velocity of the
         player.
+        返回当前的移动向量
 
         Returns
         -------
@@ -652,14 +681,18 @@ class Window(pyglet.window.Window):
     def update(self, dt):
         """ This method is scheduled to be called repeatedly by the pyglet
         clock.
+        该方法被定期调用以更新游戏
 
         Parameters
         ----------
         dt : float
             The change in time since the last call.
+            时间变化量
 
         """
+        # 处理队列
         self.model.process_queue()
+        # 检测玩家是否改变区块坐标
         sector = sectorize(self.position)
         if sector != self.sector:
             self.model.change_sectors(self.sector, sector)
@@ -674,6 +707,7 @@ class Window(pyglet.window.Window):
     def _update(self, dt):
         """ Private implementation of the `update()` method. This is where most
         of the motion logic lives, along with gravity and collision detection.
+        update()方法的内部实现, 这里是大部分移动逻辑的实现(包括重力和碰撞检测)
 
         Parameters
         ----------
@@ -703,13 +737,16 @@ class Window(pyglet.window.Window):
     def collide(self, position, height):
         """ Checks to see if the player at the given `position` and `height`
         is colliding with any blocks in the world.
+        检测玩家所在坐标和玩家高度是否和其他方块碰撞
 
         Parameters
         ----------
         position : tuple of len 3
             The (x, y, z) position to check for collisions at.
+            坐标
         height : int or float
             The height of the player.
+            玩家高度
 
         Returns
         -------
@@ -749,18 +786,22 @@ class Window(pyglet.window.Window):
     def on_mouse_press(self, x, y, button, modifiers):
         """ Called when a mouse button is pressed. See pyglet docs for button
         amd modifier mappings.
+        pyglet事件-鼠标按下
 
         Parameters
         ----------
         x, y : int
             The coordinates of the mouse click. Always center of the screen if
             the mouse is captured.
+            鼠标坐标
         button : int
             Number representing mouse button that was clicked. 1 = left button,
             4 = right button.
+            按下的按键
         modifiers : int
             Number representing any modifying keys that were pressed when the
             mouse button was clicked.
+            修改键(MOD_SHIFT, MOD_CTRL......)
 
         """
         if self.exclusive:
@@ -780,14 +821,17 @@ class Window(pyglet.window.Window):
 
     def on_mouse_motion(self, x, y, dx, dy):
         """ Called when the player moves the mouse.
+        pyglet事件-鼠标移动
 
         Parameters
         ----------
         x, y : int
             The coordinates of the mouse click. Always center of the screen if
             the mouse is captured.
+            起始坐标
         dx, dy : float
             The movement of the mouse.
+            移动
 
         """
         if self.exclusive:
@@ -806,30 +850,48 @@ class Window(pyglet.window.Window):
         ----------
         symbol : int
             Number representing the key that was pressed.
+            按键数字码
         modifiers : int
             Number representing any modifying keys that were pressed.
+            修改键
 
         """
         if symbol == key.W:
+            # 前进
             self.strafe[0] -= 1
         elif symbol == key.S:
+            # 后退
             self.strafe[0] += 1
         elif symbol == key.A:
+            # 向左
             self.strafe[1] -= 1
         elif symbol == key.D:
+            # 向右
             self.strafe[1] += 1
         elif symbol == key.SPACE:
+            # 跳跃
             if self.dy == 0:
                 self.dy = JUMP_SPEED
         elif symbol == key.F1:
+            # 退出
             self.close()
         elif symbol == key.F2:
+            # 截图
+            pyglet.image.get_buffer_manager().get_color_buffer().save('screenshot.png')
+        elif symbol == key.F3:
+            # 切换显示调试屏幕
+            self.enable_debugScreen = not self.enable_debugScreen
+        elif symbol == key.F4:
+            # 调试-打印旋转角度
             print(self.rotation)
         elif symbol == key.ESCAPE:
+            # 释放鼠标
             self.set_exclusive_mouse(False)
         elif symbol == key.TAB:
+            # 切换飞行模式
             self.flying = not self.flying
         elif symbol in self.num_keys:
+            # 切换物品栏
             index = (symbol - self.num_keys[0]) % len(self.inventory)
             self.block = self.inventory[index]
 
@@ -860,7 +922,7 @@ class Window(pyglet.window.Window):
         """
         # label
         self.debugScreen.y = height - 10
-        self.debugScreen.width = height / 2 - 10
+        self.debugScreen.width = height / 2 * 3
         # reticle
         if self.reticle:
             self.reticle.delete()
@@ -944,11 +1006,14 @@ class Window(pyglet.window.Window):
         '''
         x, y, z = normalize(self.position, ndigits=3)
         x_r, y_r, z_r = normalize(self.position)
-        self.debugScreen.text = f'Minecraft {version["STAGE"]}-{version["VERSION"]}-{revision_hash}\n' \
-                                f'{round(pyglet.clock.get_fps())} fps\n' \
-                                 '\n' \
-                                f'XYZ: {x} / {y} / {z}\n' \
-                                f'Block: {x_r} {y_r} {z_r}'
+        if self.enable_debugScreen:
+            self.debugScreen.text = f'Minecraft {version["STAGE"]}-{version["VERSION"]}-{revision_hash}\n' \
+                                    f'{round(pyglet.clock.get_fps())} fps\n' \
+                                     '\n' \
+                                    f'XYZ: {x} / {y} / {z}\n' \
+                                    f'Block: {x_r} {y_r} {z_r}'
+        else:
+            self.debugScreen.text = ''
 
                                 
         # self.label.draw()
