@@ -25,7 +25,7 @@ a = Analysis(['main.py'],
              pathex=['/new/PycharmProjects/Minecraft'],
              binaries=[],
              datas=[
-                    ('texture.png', '.'), 
+                    ('terrain.png', '.'), 
                     ('pywintypes310.dll', '.'), 
                     ('version', '.'),
                     ('Minecraft.ttf', '.'),
