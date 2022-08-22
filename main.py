@@ -226,7 +226,7 @@ class Model(object):
 
         """
         # 世界长宽的一半
-        n = 128  # 1/2 width and height of world
+        n = 64  # 1/2 width and height of world
         s = 1  # step size
         # y = 0  # initial y height 初始y坐标
         # for x in xrange(-n, n + 1, s):
@@ -555,7 +555,7 @@ class Window(pyglet.window.Window):
         # Current (x, y, z) position in the world, specified with floats. Note
         # that, perhaps unlike in math class, the y-axis is the vertical axis.
         # 当前坐标, y坐标为垂直坐标
-        self.position = (0, 0, 0)
+        self.position = (0, 70, 0)
 
         # First element is rotation of the player in the x-z plane (ground
         # plane) measured from the z-axis down. The second is the rotation
