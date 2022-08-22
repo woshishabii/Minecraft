@@ -877,7 +877,7 @@ class Window(pyglet.window.Window):
             self.close()
         elif symbol == key.F2:
             # 截图
-            pyglet.image.get_buffer_manager().get_color_buffer().save(time.strftime('%Y-%m-%d_%H.%M.%S.png'))
+            pyglet.image.get_buffer_manager().get_color_buffer().save(time.strftime('screenshots/%Y-%m-%d_%H.%M.%S.png'))
         elif symbol == key.F3:
             # 切换显示调试屏幕
             self.enable_debugScreen = not self.enable_debugScreen
