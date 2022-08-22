@@ -603,7 +603,7 @@ class Window(pyglet.window.Window):
         # TEST LABEL for DEBUG
         self.debugScreen = pyglet.text.Label('', font_name='Minecraft', font_size=12,
                                              x=10, y=self.height-10, anchor_x='left', anchor_y='top',
-                                             width=self.width*3/2, multiline=True,
+                                             width=self.width*0.6, multiline=True,
                                              color=(221, 221, 221, 255))
 
         # This call schedules the `update()` method to be called
@@ -928,7 +928,7 @@ class Window(pyglet.window.Window):
         """
         # label
         self.debugScreen.y = height - 10
-        self.debugScreen.width = height / 2 * 3
+        self.debugScreen.width = width * 0.6
         # reticle
         if self.reticle:
             self.reticle.delete()
