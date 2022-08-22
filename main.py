@@ -895,6 +895,10 @@ class Window(pyglet.window.Window):
         elif symbol == key.D:
             # 向右
             self.strafe[1] += 1
+        elif symbol == key.R:
+            # Respawn
+            # 重生
+            self.positions = (0, 70, 0)
         elif symbol == key.SPACE:
             # 跳跃
             if self.dy == 0:
