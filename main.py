@@ -1068,7 +1068,7 @@ def setup():
     """
     # Set the color of "clear", i.e. the sky, in rgba.
     # 设置GL_CLEAR颜色, 体现为天空
-    glClearColor(1.0, 0.8, 0.6, 1)
+    glClearColor(0.5, 0.69, 1.0, 1)
     # Enable culling (not rendering) of back-facing facets -- facets that aren't
     # visible to you.
     glEnable(GL_CULL_FACE)
