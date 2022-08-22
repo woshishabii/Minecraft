@@ -333,7 +333,9 @@ class Model(object):
         """
         if position in self.world:
             self.remove_block(position, immediate)
-        if position[1] < 0:
+        # Check position
+        # 检查坐标
+        if position[1] < 0 or position[0] > WORLD_WIDTH or position[2] > WORLD_WIDTH:
             return
         self.world[position] = texture
         self.sectors.setdefault(sectorize(position), []).append(position)
