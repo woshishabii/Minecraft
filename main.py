@@ -895,8 +895,8 @@ class Window(pyglet.window.Window):
             # 调试-打印旋转角度
             print(self.rotation)
         elif symbol == key.F11:
-            self.fullscreen = not self.fullscreen
-            self.set_fullscreen(self.fullscreen)
+            self.full_screen = not self.full_screen
+            self.set_fullscreen(self.full_screen)
         elif symbol == key.ESCAPE:
             # 释放鼠标
             self.set_exclusive_mouse(False)
