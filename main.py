@@ -406,8 +406,11 @@ class Model(object):
             Whether or not to show the block immediately.
 
         """
+        # print(position)
+        # print(self.world[position])
         texture = BLOCKS[self.world[position]]
         self.shown[position] = texture
+        # print(texture)
         if immediate:
             self._show_block(position, texture)
         else:
@@ -522,6 +525,7 @@ class Model(object):
 
         """
         func, args = self.queue.popleft()
+        # print(func, args)
         func(*args)
 
     def process_queue(self):
@@ -599,7 +603,7 @@ class Window(pyglet.window.Window):
 
         # A list of blocks the player can place. Hit num keys to cycle.
         # 方块列表(使用数字键盘切换)
-        self.inventory = BLOCKS
+        self.inventory = [_ for _ in range(len(BLOCKS))]
 
         # The current block the user can place. Hit num keys to cycle.
         # 当前手持
@@ -840,13 +844,16 @@ class Window(pyglet.window.Window):
         if self.exclusive:
             vector = self.get_sight_vector()
             block, previous = self.model.hit_test(self.position, vector)
+            # print('hit_test', block, previous)
             if (button == mouse.RIGHT) or \
                     ((button == mouse.LEFT) and (modifiers & key.MOD_CTRL)):
                 # ON OSX, control + left click = right click.
                 if previous:
                     self.model.add_block(previous, self.block)
             elif button == pyglet.window.mouse.LEFT and block:
-                texture = BLOCKS[self.model.world[block]]
+                # print(block)
+                # print(self.model.world[block])
+                # texture = BLOCKS[self.model.world[block]]
                 # if texture != STONE:
                 #     self.model.remove_block(block)
                 self.model.remove_block(block)
