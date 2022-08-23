@@ -26,7 +26,7 @@ a = Analysis(['main.py'],
              binaries=[],
              datas=[
                     ('terrain.png', '.'), 
-                    ('pywintypes310.dll', '.'), 
+                    ('runtime/pywintypes310.dll', '.'), 
                     ('version', '.'),
                     ('Minecraft.ttf', '.'),
                     ('commit_info', '.')],
