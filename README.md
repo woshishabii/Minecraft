@@ -2,7 +2,7 @@
 
 Simple Minecraft-inspired demo written in Python and Pyglet.
 
-We're trying to update this project to the newest version of Mojang
+We're trying to update this project to the newest version of Mojang --woshishabi&jgbsxx20130315
 
 http://www.youtube.com/watch?v=kC3lwK631X8
 
